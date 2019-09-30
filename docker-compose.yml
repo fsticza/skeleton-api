@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  skeleton-api:
+    image: node:alpine
+    volumes:
+      - ./api/:/app
+    working_dir: /app
+    env_file: ./api/.env
+    depends_on:
+      - skeleton-db
+    ports:
+      - 3002:3002
+    command: npm run dev
+    networks:
+      - skeleton-network
+  skeleton-db:
+    image: mongo:latest
+    ports: 
+      - 27017:27017
+    volumes:
+      - ./api/data/db:/data/db
+    networks:
+      - skeleton-network
+
+networks:
+  skeleton-network:
+    driver: bridge

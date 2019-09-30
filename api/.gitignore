@@ -1,0 +1,8 @@
+node_modules
+.env
+config/skeleton-api-*.json
+coverage
+.nyc_output
+.vscode
+data
+*.log

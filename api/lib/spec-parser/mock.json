@@ -1,0 +1,226 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Skeleton",
+    "description": "Skeleton OpenAPI 3.0.1 specification",
+    "contact": {
+      "name": "Dev Team",
+      "email": "dev@domain.com",
+      "url": "https://domain.com/contact"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://skeleton-api.cm/api",
+      "description": "Stationion environment"
+    },
+    {
+      "url": "https://test.skeleton-api.cm/api",
+      "description": "Test environment"
+    },
+    {
+      "url": "https://dev.skeleton-api.cm/api",
+      "description": "Development environment"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/auth/token": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "security": [],
+        "description": "Sign in. Returns a new token for correct credentials.",
+        "operationId": "signIn",
+        "requestBody": {
+          "description": "Get a new token for valid credentials",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Credentials"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sign in response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "auth"
+        ],
+        "description": "Sign out. Detels the token",
+        "operationId": "signOut",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "sign out response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JW"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    },
+    "schemas": {
+      "Account": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NewAccount"
+          },
+          {
+            "required": [
+              "id",
+              "roles"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "NewAccount": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Credentials"
+          },
+          {
+            "required": [
+            ],
+            "properties": {
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "Credentials": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "Token": {
+        "required": [
+          "id",
+          "expiry"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "expiry": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,444 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Title",
+    "description": "Skeleton OpenAPI 3.0.1 specification",
+    "contact": {
+      "name": "Dev Team",
+      "email": "dev@domain.com",
+      "url": "https://domain.com/contact"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.domain.com/v1",
+      "description": "Production environment"
+    },
+    {
+      "url": "https://api/api",
+      "description": "Development environment"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/auth/token": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "security": [],
+        "description": "Sign in. Returns a new token for correct credentials.",
+        "operationId": "signIn",
+        "requestBody": {
+          "description": "Get a new token for valid credentials",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Credentials"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "sign in response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "auth"
+        ],
+        "description": "Sign out. Deletes the token",
+        "operationId": "signOut",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "sign out response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "description": "List accounts",
+        "operationId": "listAccounts",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Account"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "description": "Registration / Sign up",
+        "operationId": "createAccount",
+        "requestBody": {
+          "description": "account payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewAccount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Account response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{id}": {
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "description": "Returns a account based on a single ID, if the account does not have access to data",
+        "operationId": "showAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of account",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "account response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "account"
+        ],
+        "description": "Edit account",
+        "operationId": "updateAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of account",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "account payload",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewAccount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "account response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    },
+    "schemas": {
+      "Account": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NewAccount"
+          },
+          {
+            "required": [
+              "id",
+              "roles"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "NewAccount": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Credentials"
+          },
+          {
+            "properties": {
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "Credentials": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "writeOnly": true,
+            "format": "password"
+          }
+        }
+      },
+      "Token": {
+        "required": [
+          "token"
+        ],
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "Address": {
+        "required": [
+          "street",
+          "city",
+          "locality",
+          "postalCode",
+          "countryCode"
+        ],
+        "properties": {
+          "street": {
+            "type": "string",
+            "example": "665 3rd St."
+          },
+          "additional": {
+            "type": "string",
+            "expample": "Suite 207"
+          },
+          "locality": {
+            "type": "string",
+            "example": "San Francisco"
+          },
+          "region": {
+            "type": "string",
+            "example": "CA"
+          },
+          "postalCode": {
+            "type": "string",
+            "example": "94022"
+          },
+          "countryCode": {
+            "type": "string",
+            "example": "US"
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "id",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

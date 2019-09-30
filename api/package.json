@@ -1,0 +1,67 @@
+{
+  "name": "skeleton",
+  "version": "1.0.0",
+  "description": "Skeleton Web API",
+  "author": "Ferenc Sticza <sticza.ferenc@gmail.com>",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon localhost 3001",
+    "start": "node --inspect index.js",
+    "test": "npx ava --verbose",
+    "watch": "npm test -- --watch",
+    "coverage": "npx nyc npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/skeleton/api.git"
+  },
+  "keywords": [
+    "API",
+    "koa"
+  ],
+  "bugs": {
+    "url": "https://gitlab.com/skeleton/api/issues"
+  },
+  "homepage": "https://gitlab.com/skeleton/api#README",
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "ajv": "^6.10.2",
+    "dotenv": "^8.0.0",
+    "json-schema-ref-parser": "^7.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.1",
+    "koa-helmet": "^5.0.0",
+    "koa-json": "^2.0.2",
+    "koa-jwt": "^3.6.0",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^7.4.0",
+    "koa-unless": "^1.0.7",
+    "module-alias": "^2.2.1",
+    "mongoose": "^5.6.9",
+    "urijs": "^1.19.1",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "ava": "^2.2.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "mongodb-memory-server": "^5.2.0",
+    "nodemon": "^1.19.1",
+    "nyc": "^14.1.1",
+    "supertest": "^4.0.2"
+  },
+  "engines": {
+    "node": ">= 10.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "_moduleAliases": {
+    "@root": "."
+  }
+}
