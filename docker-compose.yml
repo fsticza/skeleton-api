@@ -2,18 +2,21 @@ version: "3"
 
 services:
   skeleton-api:
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
     image: node:alpine
     volumes:
       - ./api/:/app
-    working_dir: /app
     env_file: ./api/.env
     depends_on:
       - skeleton-db
     ports:
-      - 3002:3002
+      - 3069:3069
     command: npm run dev
     networks:
       - skeleton-network
+      
   skeleton-db:
     image: mongo:latest
     ports: 

@@ -2,8 +2,6 @@ FROM node:12-alpine
 
 WORKDIR /home/node/app
 
-VOLUME /home/node/app/assets
-
 COPY package*.json ./
 
 RUN chmod 750 /home/node/app && \
@@ -16,6 +14,6 @@ RUN chmod 750 /home/node/app && \
 USER node
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3069
 
 CMD [ "npm", "start" ]
