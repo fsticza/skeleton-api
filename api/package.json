@@ -40,7 +40,7 @@
     "koa-unless": "^1.0.7",
     "module-alias": "^2.2.1",
     "mongoose": "^5.6.9",
-    "urijs": "^1.19.1",
+    "urijs": "^1.19.4",
     "winston": "^3.2.1"
   },
   "devDependencies": {
